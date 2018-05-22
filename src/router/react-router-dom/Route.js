@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import PropTypes from 'prop-types';
+import pathToRegexp from 'path-to-regexp';
 export default class Route extends Component{
-  contextTypes={
+  static contextTypes={
     location:PropTypes.object
   }
   constructor(props){
@@ -12,14 +13,11 @@ export default class Route extends Component{
     this.keys = this.keys.map(key=>key.name);
   }
   render(){
-    let {path,component:Component,render} = this.props;
-    let {location}=this.context;
-    let result = location.pathname.match(this.regexp);
-    let {path} = this.props;
-    console.log(this.context);
+    let {path,component:A,render} = this.props;
     let {location:{pathname}} = this.context;
     if(path ==pathname||pathname.startsWith(path)){
-      return <component location={location} />
+      return <A location={this.context.location} />
     }
+    return null
   }
 }
